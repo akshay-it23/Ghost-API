@@ -1,0 +1,51 @@
+// Prisma schema for GhostAPI
+// This defines the database structure for tracking API usage and detecting risks
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Table 1: Stores all unique API endpoints
+model ApiEndpoint {
+  id         Int       @id @default(autoincrement())
+  path       String    // e.g., "/users"
+  method     String    // e.g., "GET"
+  deprecated Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  hits       ApiHit[]
+  risks      ApiRisk[]
+
+  @@unique([path, method])
+  @@map("api_endpoint")
+}
+
+// Table 2: Stores every API call event
+model ApiHit {
+  id           Int         @id @default(autoincrement())
+  endpointId   Int
+  statusCode   Int         // e.g., 200, 404, 500
+  responseTime Int         // in milliseconds
+  authPresent  Boolean     // was auth token present?
+  timestamp    DateTime    @default(now())
+  endpoint     ApiEndpoint @relation(fields: [endpointId], references: [id])
+
+  @@map("api_hit")
+}
+
+// Table 3: Stores detected risks
+model ApiRisk {
+  id          Int         @id @default(autoincrement())
+  endpointId  Int
+  riskType    String      // DEAD, UNSECURED, UNSTABLE, LOW_USAGE, ZOMBIE
+  severity    String      // LOW, MEDIUM, HIGH, CRITICAL
+  explanation String      // human-readable explanation
+  detectedAt  DateTime    @default(now())
+  endpoint    ApiEndpoint @relation(fields: [endpointId], references: [id])
+
+  @@map("api_risk")
+}

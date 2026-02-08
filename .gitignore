@@ -1,0 +1,8 @@
+**/README.md
+.env
+node_modules/
+
+# Project docs
+PHASE1_SETUP.md
+plan.md
+PRISMA_FIX.md
