@@ -10,7 +10,7 @@ class AnalyticsController {
      * GET /api/analytics/overview
      * Returns summary statistics for dashboard
      */
-    async getOverview(req, res) {
+    getOverview = async (req, res) => {
         try {
             const totalApis = await prisma.apiEndpoint.count();
             const totalRisks = await prisma.apiRisk.count();
@@ -37,10 +37,10 @@ class AnalyticsController {
     }
 
     /**
-     * GET /api/analytics/risks
-     * Returns all detected risks with endpoint details
-     */
-    async getAllRisks(req, res) {
+   * GET /api/analytics/risks
+   * Returns all detected risks with endpoint details
+   */
+    getAllRisks = async (req, res) => {
         try {
             const risks = await prisma.apiRisk.findMany({
                 include: {
@@ -58,10 +58,10 @@ class AnalyticsController {
     }
 
     /**
-     * GET /api/analytics/endpoint/:id
-     * Returns detailed information about a specific endpoint
-     */
-    async getEndpointDetails(req, res) {
+   * GET /api/analytics/endpoint/:id
+   * Returns detailed information about a specific endpoint
+   */
+    getEndpointDetails = async (req, res) => {
         try {
             const { id } = req.params;
 
@@ -87,10 +87,10 @@ class AnalyticsController {
     }
 
     /**
-     * GET /api/analytics/endpoint/:id/timeline
-     * Returns usage timeline grouped by day
-     */
-    async getUsageTimeline(req, res) {
+   * GET /api/analytics/endpoint/:id/timeline
+   * Returns usage timeline grouped by day
+   */
+    getUsageTimeline = async (req, res) => {
         try {
             const { id } = req.params;
 
@@ -119,10 +119,10 @@ class AnalyticsController {
     }
 
     /**
-     * GET /api/analytics/endpoints
-     * Returns all endpoints with basic stats
-     */
-    async getAllEndpoints(req, res) {
+   * GET /api/analytics/endpoints
+   * Returns all endpoints with basic stats
+   */
+    getAllEndpoints = async (req, res) => {
         try {
             const endpoints = await prisma.apiEndpoint.findMany({
                 include: {

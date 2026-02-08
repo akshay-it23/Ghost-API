@@ -1,3 +1,6 @@
-**/*.md
+plan.md
+README.md
+.gitignore
+node_modules
 .env
-node_modules/
+*.md
