@@ -19,6 +19,10 @@ app.use(ghostApiMiddleware);
 const sampleRoutes = require('./routes/sample.routes');
 app.use('/api', sampleRoutes);
 
+// Analytics routes (Dashboard APIs)
+const analyticsRoutes = require('./routes/analytics.routes');
+app.use('/api/analytics', analyticsRoutes);
+
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', message: 'GhostAPI server is running' });
